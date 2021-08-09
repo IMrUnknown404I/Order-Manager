@@ -64,18 +64,20 @@ import javax.swing.table.TableRowSorter;
 public class MainJFrame extends javax.swing.JFrame implements Serializable {
     public MainJFrame() throws IOException {
         try {
+            // check for valid rootPath and db existing
+            try {
+                TableMethods.loadConfig();
+            } catch (NoSuchFileException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "        В директории по корневому пути не найдены все нужныу системныу файлы!\n"
+                            + "Восстановите их перед началом работы или укажите новый корневой путь для работы!","Системное уведомление", JOptionPane.ERROR_MESSAGE);
+        }
             
             initComponents();
             initOtherComponents();
             DataFilling.tableFilling(mainJTable, archieveJTable);
             updateInfo();
             
-            // check for om settings existing
-            TableMethods.loadConfig();
-        } catch (NoSuchFileException | FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "        В директории по корневому пути не найдено всех нужных системных файлов!\n"
-                            + "Восстановите их перед началом работы или укажите новый корневой путь для работы!","Системное уведомление", JOptionPane.ERROR_MESSAGE);
-        }
+        } catch (NoSuchFileException | FileNotFoundException ex) { Logger.getLogger(TableMethods.class.getName()).log(Level.SEVERE, null, ex); }
 
     }
     private void initOtherComponents(){
