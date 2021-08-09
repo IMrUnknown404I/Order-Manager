@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 public class InitialModule {
     /**
      * Launching the main window
-     * @param args 
+     * @param args cmd arhs
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
