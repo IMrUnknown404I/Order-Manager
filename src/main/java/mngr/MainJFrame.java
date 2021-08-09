@@ -62,6 +62,10 @@ import javax.swing.table.TableRowSorter;
  * @author MrUnknown404
  */
 public class MainJFrame extends javax.swing.JFrame implements Serializable {
+    /**
+     * Do init for components
+     * @throws IOException for file errors
+     */
     public MainJFrame() throws IOException {
         try {
             // check for valid rootPath and db existing
@@ -80,6 +84,9 @@ public class MainJFrame extends javax.swing.JFrame implements Serializable {
         } catch (NoSuchFileException | FileNotFoundException ex) { Logger.getLogger(TableMethods.class.getName()).log(Level.SEVERE, null, ex); }
 
     }
+    /**
+     * init of tables, tabbed pane and menu
+     */
     private void initOtherComponents(){
         infoTextArea.setFont(new Font(inputRecord.getFont().getName(),Font.PLAIN, 13));
         
@@ -95,7 +102,9 @@ public class MainJFrame extends javax.swing.JFrame implements Serializable {
     private JTable archieveJTable;
     private String newPath = null;
 
-    // filling and design of the table, we put it in the scroll and add it to the palette
+    /**
+     * Filling and design of the Active order table, we put it in the scroll and add it to the palette
+     */
     private void setMainTable(){
         // initiate and configure the table
         mainJTable = new JTable();
@@ -216,7 +225,9 @@ public class MainJFrame extends javax.swing.JFrame implements Serializable {
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         sourceTabbedPane.addTab("  Текущие проекты  ", scroll);
     }
-    
+    /**
+     * filling and design of the Archieve table, we put it in the scroll and add it to the palette
+     */
     private void setArhieveTable(){
         // initiate and configure the table
         archieveJTable = new JTable();
@@ -975,27 +986,60 @@ public class MainJFrame extends javax.swing.JFrame implements Serializable {
     }
     
     // Getters and Setters are there
+    
+    /**
+     * Selection getter
+     * @return selected row
+     */
     protected int getMainTableSelectedRow() {
         return mainJTable.getSelectedRow();
     }
+    /**
+     * Getter of MainTable row count
+     * @return current count of rows
+     */
     protected int getMainTableRowCount() {
         return mainJTable.getRowCount();
     }
+    /**
+     * Getter of Archieve selection
+     * @return selected row
+     */
     protected int getArchieveTableSelectedRow() {
         return archieveJTable.getSelectedRow();
     }
+    /**
+     * Getter of ArchieveTable row count
+     * @return current count of rows
+     */
     protected int getArchieveTableRowCount() {
         return archieveJTable.getRowCount();
     }
+    /**
+     * Getter for text in the Info area
+     * @return the information text
+     */
     protected String getInfoText() {
         return infoTextArea.getText();
     }
+    /**
+     * Setter for text in the Info area
+     * @param text new Text to set in
+     */
     protected void setInfoText(String text) {
         infoTextArea.setText(text);
     }
+    /**
+     * Getter for TabbedPane
+     * @return current Tab
+     */
     protected int getCurrentTab() {
         return sourceTabbedPane.getSelectedIndex();
     }
+    /**
+     * Setter for TabbedPane
+     * @param mark new tab for the Pane
+     */
     protected void setCurrentTab(int mark) {
         sourceTabbedPane.setSelectedIndex(mark);
     }
