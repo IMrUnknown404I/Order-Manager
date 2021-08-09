@@ -68,7 +68,7 @@ public class MainJFrame extends javax.swing.JFrame implements Serializable {
             try {
                 TableMethods.loadConfig();
             } catch (NoSuchFileException | FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "        В директории по корневому пути не найдены все нужныу системныу файлы!\n"
+            JOptionPane.showMessageDialog(null, "        В директории по корневому пути не найдены все нужные системные файлы!\n"
                             + "Восстановите их перед началом работы или укажите новый корневой путь для работы!","Системное уведомление", JOptionPane.ERROR_MESSAGE);
         }
             
