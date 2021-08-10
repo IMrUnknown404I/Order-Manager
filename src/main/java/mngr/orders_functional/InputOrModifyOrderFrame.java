@@ -331,11 +331,12 @@ public class InputOrModifyOrderFrame extends JFrame {
                             creatingPropertyUpdate(isArchieveTab);
                             model.addRow(new Object[]{returnTextField.getText(), acceptTextField.getText(), custumerTextField.getText(), descriptionEditor.getText(), null});
                         } catch (IOException ex) { Logger.getLogger(InputOrModifyOrderFrame.class.getName()).log(Level.SEVERE, null, ex); }
+                        
+                        dispose();
                     }
                 }
                 
                 tab.clearSelection();
-                dispose();
             });
         }
         else { // modify

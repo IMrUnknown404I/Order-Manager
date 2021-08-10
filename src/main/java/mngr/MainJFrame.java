@@ -707,11 +707,11 @@ public class MainJFrame extends javax.swing.JFrame implements Serializable {
                     else
                         om = false;
                     
-                    if (!actual_cont && !archieve_cont && !om) {
-                        JOptionPane.showMessageDialog(null, "В дампе не обнаружено всех резервных системных файлов!\n"
-                                + "Недостающие данные были восстановлены пустыми, выполните обновление базы.","Ошибка", JOptionPane.ERROR_MESSAGE);
-                        
+                    if (!(actual_cont && archieve_cont && om)) {
                         TableMethods.checkDirectoriesAfterRootChange(TableMethods.getRootPath());
+                        
+                        JOptionPane.showMessageDialog(null, "        В дампе не обнаружено всех резервных системных файлов!\n"
+                                + "Недостающие данные были восстановлены пустыми, выполните обновление базы.","Ошибка", JOptionPane.ERROR_MESSAGE);
                     }
                     else 
                         JOptionPane.showMessageDialog(null, "Восстановление системных файлов завершено!","Выполнено", JOptionPane.INFORMATION_MESSAGE);
