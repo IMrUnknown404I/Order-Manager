@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mngr</groupId>
     <artifactId>OrderMngr</artifactId>
-    <version>final-9.1</version>
+    <version>final-8.5</version>
     <packaging>jar</packaging>
     <url>http://maven.apache.org</url>
     
@@ -73,38 +73,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>14</source>
-                    <target>14</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>14</source>
-                    <target>14</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>14</source>
-                    <target>14</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>14</source>
-                    <target>14</target>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
     
@@ -115,4 +83,5 @@
     </properties>
     <name>OrderManager</name>
     
+>>>>>>> c0440c9c9453b8c3cf85835dfd1ac01105a7cabd
 </project>

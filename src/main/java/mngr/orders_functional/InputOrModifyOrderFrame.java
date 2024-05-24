@@ -300,7 +300,7 @@ public class InputOrModifyOrderFrame extends JFrame {
                 Path pathString = null;
                 DefaultTableModel model = (DefaultTableModel) tab.getModel();
                 
-                String customerTextString = custumerTextField.getText().strip();
+                String customerTextString = custumerTextField.getText().strip().replaceAll("  ", " ");
                 if (customerTextString == null || customerTextString.equals(""))
                     custumerTextField.setText("None");
                 else if (customerTextString.endsWith("."))
@@ -360,8 +360,7 @@ public class InputOrModifyOrderFrame extends JFrame {
                         isCurrentModifyingUser = true;
                         DefaultTableModel model = (DefaultTableModel) tab.getModel();
                         
-                        
-                        String customerTextString = custumerTextField.getText().strip();
+                        String customerTextString = custumerTextField.getText().strip().replaceAll("  ", " ");
                         if (customerTextString == null || customerTextString.equals(""))
                             custumerTextField.setText("None");
                         else if (customerTextString.endsWith("."))
