@@ -84,7 +84,7 @@ public class DescriptionInputFrame extends JFrame{
         canButton = new JButton("Отменить");
         canButton.setPreferredSize(new Dimension(120,40));
         
-        editor.setText(context == null ? "":context);
+        editor.setText(context == null ? "" : context);
         editor.setEditable(true);
         editor.setAlignmentX(CENTER_ALIGNMENT);
         editor.setSize(400,180);

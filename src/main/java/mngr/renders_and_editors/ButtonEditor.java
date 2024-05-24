@@ -70,10 +70,12 @@ public class ButtonEditor extends DefaultCellEditor {
         Runnable action = () -> {
             if (pathString != null) {
                 try {
+                    System.out.println(pathString);
                     Path realPath = Path.of(TableMethods.getRootPath().toString(), pathString);
-                    
+                    System.out.println(realPath);
                     if(Files.exists(realPath))
-                        Runtime.getRuntime().exec("explorer.exe /open, " + realPath);
+                        Runtime.getRuntime().exec("explorer.exe /open, " + "\""+realPath+"\"");
+                    System.out.println(Files.exists(realPath));
                 } catch (IOException ex) {
                     Logger.getLogger(ButtonEditor.class.getName()).log(Level.SEVERE, null, ex);
                 }

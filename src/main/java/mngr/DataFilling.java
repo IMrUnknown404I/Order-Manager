@@ -1,9 +1,12 @@
 package mngr;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -46,13 +49,15 @@ class DataFilling {
             if (dirName.matches(regex)) {
                 //check prop Text for existing current order
                 try (FileReader fileReader = new FileReader(TableMethods.getRootPath().toString()+"\\config\\actual_cont.txt")) {
+//                try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(TableMethods.getRootPath().toString()+"\\config\\actual_cont.txt"), "UTF-8"))) {
                     Scanner scan = new Scanner(fileReader);
                     ArrayList<String> propText = new ArrayList<>();
                     String currentLine = "";
                     //filling fields (if lines for this order exists) and propText 
                     while (scan.hasNextLine()) {
                         currentLine = scan.nextLine();
-                        if (currentLine.contains("id") && currentLine.contains(dirName)) {
+//                        if (currentLine.contains("id") && currentLine.contains(dirName)) {
+                        if (currentLine.contains("id") && currentLine.split(": ")[1].equals(dirName)) {
                             propText.add(currentLine); // id
                             currentLine = scan.nextLine(); //return date
                             propText.add(currentLine); 
@@ -68,11 +73,11 @@ class DataFilling {
                             currentLine = scan.nextLine(); //description
                             if (currentLine.split(": ").length==1) description = "";
                             else description = currentLine.split(": ")[1] +"\r\n";
-                            while (scan.hasNext() && !currentLine.contains("id")) { 
+                            while (scan.hasNextLine() && !currentLine.contains("id")) {
+                                currentLine = scan.nextLine();
                                 propText.add(currentLine); 
                                 if (!currentLine.contains("description"))
                                     description += currentLine +"\r\n";
-                                currentLine = scan.nextLine();
                             }
                             if (currentLine.contains("id")) propText.add(currentLine);
                         } 
@@ -81,7 +86,7 @@ class DataFilling {
                     }
                     
                     //check fiels (if not null -> dont write anything in prop and just create row in table
-                    if (returnDate!=null&&acceptDate!=null&&customer!=null&&description!=null) {
+                    if (returnDate!=null && acceptDate!=null && customer!=null && description!=null) {
                         ((DefaultTableModel) mainTab.getModel()).addRow(new Object[]{returnDate, acceptDate, customer, description, null});
                     } else { //create new row and adding info abour the order to prop file
                         ((DefaultTableModel) mainTab.getModel()).addRow(new Object[]{dirName.split(" ")[0],
@@ -114,7 +119,7 @@ class DataFilling {
                     //filling fields (if lines for this order exists) and propText 
                     while (scan.hasNextLine()) {
                         currentLine = scan.nextLine();
-                        if (currentLine.contains("id") && currentLine.contains(dirName)) {
+                        if (currentLine.contains("id") && currentLine.split(": ")[1].equals(dirName)) {
                             propText.add(currentLine); // id
                             currentLine = scan.nextLine(); //return date
                             propText.add(currentLine); 
@@ -126,11 +131,11 @@ class DataFilling {
                             currentLine = scan.nextLine(); //description
                             if (currentLine.split(": ").length==1) description = "";
                             else description = currentLine.split(": ")[1] +"\r\n";
-                            while (scan.hasNext() && !currentLine.contains("id")) { 
+                            while (scan.hasNextLine() && !currentLine.contains("id")) { 
+                                currentLine = scan.nextLine(); 
                                 propText.add(currentLine); 
                                 if (!currentLine.contains("description"))
                                     description += currentLine +"\r\n";
-                                currentLine = scan.nextLine(); 
                             }
                             if (currentLine.contains("id")) propText.add(currentLine);
                         } 

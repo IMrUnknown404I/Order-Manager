@@ -299,8 +299,13 @@ public class InputOrModifyOrderFrame extends JFrame {
             acceptButton.addActionListener((ActionEvent e) -> {
                 Path pathString = null;
                 DefaultTableModel model = (DefaultTableModel) tab.getModel();
-                if (custumerTextField.getText().equals(""))
+                
+                String customerTextString = custumerTextField.getText().strip();
+                if (customerTextString == null || customerTextString.equals(""))
                     custumerTextField.setText("None");
+                else if (customerTextString.endsWith("."))
+                    custumerTextField.setText(customerTextString.substring(0, customerTextString.length() - 1));
+                else custumerTextField.setText(customerTextString);
                 
                 if (isArchieveTab) { // for Archieve
                     pathString = Path.of(TableMethods.getRootPath().toString() + "\\АРХИВ",
@@ -313,7 +318,7 @@ public class InputOrModifyOrderFrame extends JFrame {
                         try {
                             Files.createDirectory(pathString);
                             creatingPropertyUpdate(isArchieveTab);
-                            model.addRow(new Object[]{returnTextField.getText(), custumerTextField.getText(), descriptionEditor.getText(), null});
+                            model.addRow(new Object[]{returnTextField.getText(), TableMethods.toValidNameFile(custumerTextField.getText()), descriptionEditor.getText(), null});
                         } catch (IOException ex) {
                             Logger.getLogger(InputOrModifyOrderFrame.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -353,39 +358,47 @@ public class InputOrModifyOrderFrame extends JFrame {
 
                         TableMethods.setModifyingAvaibleMark(false);
                         isCurrentModifyingUser = true;
-
                         DefaultTableModel model = (DefaultTableModel) tab.getModel();
-                        if (custumerTextField.getText() == null || custumerTextField.getText().equals("")) {
+                        
+                        
+                        String customerTextString = custumerTextField.getText().strip();
+                        if (customerTextString == null || customerTextString.equals(""))
                             custumerTextField.setText("None");
-                        }
+                        else if (customerTextString.endsWith("."))
+                            custumerTextField.setText(customerTextString.substring(0, customerTextString.length() - 1));
+                        else custumerTextField.setText(customerTextString);
+                        
+                        String customer = TableMethods.toValidNameFile(custumerTextField.getText());
 
                         // prop conf
-                        propertyConfigure(model.getValueAt(row, 0) + " " + model.getValueAt(row, 2), new String[]{returnTextField.getText() + " " + custumerTextField.getText(), //id
+                        propertyConfigure(model.getValueAt(row, 0) + " " + model.getValueAt(row, 2), new String[]{returnTextField.getText() + " " + customer, //id
                             returnTextField.getText(), //return date
                             acceptTextField.getText(), //accept date
-                            custumerTextField.getText(), //custumer
+                            customer, //custumer
                             descriptionEditor.getText()}); //description
 
                         // dir conf
                         try {
                             Path oldPathToFile = Path.of(TableMethods.getRootPath().toString() + "\\Текущие заказы", model.getValueAt(row, 0) + " " + model.getValueAt(row, 2));
-                            Path actualPathToFile = Path.of(TableMethods.getRootPath().toString() + "\\Текущие заказы", returnTextField.getText() + " " + custumerTextField.getText());
+                            Path actualPathToFile = Path.of(TableMethods.getRootPath().toString() + "\\Текущие заказы", returnTextField.getText() + " " + customer);
 
                             if (oldPathToFile.compareTo(actualPathToFile) == 0) {
-                                propertyConfigure(model.getValueAt(row, 0) + " " + model.getValueAt(row, 2), new String[]{returnTextField.getText() + " " + custumerTextField.getText(), //id
+                                propertyConfigure(model.getValueAt(row, 0) + " " + model.getValueAt(row, 2), new String[]{returnTextField.getText() + " " + customer, //id
                                     returnTextField.getText(), //return date
                                     acceptTextField.getText(), //accept date
-                                    custumerTextField.getText(), //custumer
+                                    customer, //custumer
                                     descriptionEditor.getText()}); //description
                             } else {
                                 Files.walkFileTree(oldPathToFile, new DirectoryMoveWithDeletingVisitor(oldPathToFile, actualPathToFile));
                             }
-                        } catch (IOException io) { Logger.getLogger(InputOrModifyOrderFrame.class.getName()).log(Level.SEVERE, null, io); }
-
+                        } catch (IOException io) {
+                            Logger.getLogger(InputOrModifyOrderFrame.class.getName()).log(Level.SEVERE, null, io);
+                        }
+                        
                         // config the Tab
                         model.setValueAt(returnTextField.getText(), row, 0);
                         model.setValueAt(acceptTextField.getText(), row, 1);
-                        model.setValueAt(custumerTextField.getText(), row, 2);
+                        model.setValueAt(customer, row, 2);
                         model.setValueAt(descriptionEditor.getText(), row, 3);
 
                         tab.clearSelection();
@@ -397,7 +410,7 @@ public class InputOrModifyOrderFrame extends JFrame {
                             isCurrentModifyingUser = false;
                         Logger.getLogger(InputOrModifyOrderFrame.class.getName()).log(Level.SEVERE, null, ex);
                         try { TableMethods.setModifyingAvaibleMark(true); }
-                        catch (IOException ioe) { Logger.getLogger(InputOrModifyOrderFrame.class.getName()).log(Level.SEVERE, null, ex); }
+                        catch (IOException ioe) { Logger.getLogger(InputOrModifyOrderFrame.class.getName()).log(Level.SEVERE, null, ioe); }
                     }
                 });
         }
@@ -572,9 +585,9 @@ public class InputOrModifyOrderFrame extends JFrame {
             }
             else {
                 StringBuilder builder = new StringBuilder(timeStampYear);
-                builder = builder.replace(builder.length()-1, builder.length(), ""); //YYY# mask for year is ready
+                builder = builder.replace(builder.length()-2, builder.length(), ""); //YYY# mask for year is ready
                 
-                dateFormatter = new MaskFormatter(builder.toString() + "#.##.##");
+                dateFormatter = new MaskFormatter(builder.toString() + "##.##.##");
             }
             
             dateFormatter.setPlaceholderCharacter('0');
