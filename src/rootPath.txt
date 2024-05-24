@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-rootPath = ...\..\DB
-=======
-rootPath = D:\\Soft\\NetBeans-12.4\\beansfold\\testdb
->>>>>>> c0440c9c9453b8c3cf85835dfd1ac01105a7cabd
+rootPath = D:\Soft\NetBeans-12.4\beansfold\Order-Mngr\DB
