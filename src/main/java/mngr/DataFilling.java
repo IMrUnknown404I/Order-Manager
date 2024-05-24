@@ -75,9 +75,11 @@ class DataFilling {
                             else description = currentLine.split(": ")[1] +"\r\n";
                             while (scan.hasNextLine() && !currentLine.contains("id")) {
                                 currentLine = scan.nextLine();
-                                propText.add(currentLine); 
-                                if (!currentLine.contains("description"))
-                                    description += currentLine +"\r\n";
+                                if (!currentLine.contains("id")) {
+                                    propText.add(currentLine); 
+                                    if (!currentLine.contains("description"))
+                                        description += currentLine +"\r\n";
+                                }
                             }
                             if (currentLine.contains("id")) propText.add(currentLine);
                         } 
@@ -132,10 +134,14 @@ class DataFilling {
                             if (currentLine.split(": ").length==1) description = "";
                             else description = currentLine.split(": ")[1] +"\r\n";
                             while (scan.hasNextLine() && !currentLine.contains("id")) { 
-                                currentLine = scan.nextLine(); 
-                                propText.add(currentLine); 
-                                if (!currentLine.contains("description"))
-                                    description += currentLine +"\r\n";
+                                if (!currentLine.contains("id")) {
+                                    currentLine = scan.nextLine();
+                                    if (!currentLine.contains("id")) {
+                                        propText.add(currentLine); 
+                                        if (!currentLine.contains("description"))
+                                            description += currentLine +"\r\n";
+                                    }
+                                }
                             }
                             if (currentLine.contains("id")) propText.add(currentLine);
                         } 
